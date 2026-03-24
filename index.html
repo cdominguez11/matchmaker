@@ -76,39 +76,32 @@ console.log("starting Matchmake Lite");
 function calculateMatch() {
     console.log("Calculating match...");
 
-  const DESIRED_RESPONSE = [
-    5, /* strongly agree - cozy movie night */
-    4, /* agree - exotic foods */
-    5, /* strongly agree - tacos */
-    4, /* agree - nature hikes */
-    5, /* strongly agree - physical fitness */
-  ];  
+    const DESIRED_RESPONSE = [
+        5, /* strongly agree - cozy movie night */
+        4, /* agree - exotic foods */
+        5, /* strongly agree - tacos */
+        4, /* agree - nature hikes */
+        5, /* strongly agree - physical fitness */
+    ];
 
-	// Get the current values of the dropdown controls.
-	let question1Response = document.getElementById("q1").selectedOptions[0].value;
-	let question2Response = document.getElementById("q2").selectedOptions[0].value;
-	let question3Response = document.getElementById("q3").selectedOptions[0].value;
-	let question4Response = document.getElementById("q4").selectedOptions[0].value;
-	let question5Response = document.getElementById("q5").selectedOptions[0].value;
+    // Get the current values of the dropdown controls.
+    let question1Response = document.getElementById("q1").selectedOptions[0].value;
+    let question2Response = document.getElementById("q2").selectedOptions[0].value;
+    let question3Response = document.getElementById("q3").selectedOptions[0].value;
+    let question4Response = document.getElementById("q4").selectedOptions[0].value;
+    let question5Response = document.getElementById("q5").selectedOptions[0].value;
 
-    const MAX_SCORE = 25;
+    // Calculate the absolute difference for each question
+    let question1Compatibility = Math.abs(question1Response - DESIRED_RESPONSE[0]);
+    let question2Compatibility = Math.abs(question2Response - DESIRED_RESPONSE[1]);
+    let question3Compatibility = Math.abs(question3Response - DESIRED_RESPONSE[2]);
+    let question4Compatibility = Math.abs(question4Response - DESIRED_RESPONSE[3]);
+    let question5Compatibility = Math.abs(question5Response - DESIRED_RESPONSE[4]);
 
-  // Calculate compatibility scores using Math.abs() like the professor's example
-  let question1Compatibility = 5 - Math.abs(question1Response - DESIRED_RESPONSE[0]);
-  let question2Compatibility = 5 - Math.abs(question2Response - DESIRED_RESPONSE[1]);
-  let question3Compatibility = 5 - Math.abs(question3Response - DESIRED_RESPONSE[2]);
-  let question4Compatibility = 5 - Math.abs(question4Response - DESIRED_RESPONSE[3]);
-  let question5Compatibility = 5 - Math.abs(question5Response - DESIRED_RESPONSE[4]);
+    // Add them up and subtract from 100
+    let totalCompatibility = 100 - (question1Compatibility + question2Compatibility + question3Compatibility + question4Compatibility + question5Compatibility);
 
-  // Add them all up
-  let totalCompatibility = question1Compatibility + question2Compatibility + question3Compatibility + question4Compatibility + question5Compatibility;
-
-  // Convert to percentage
-  totalCompatibility *= 100 / MAX_SCORE;
-  totalCompatibility = Math.round(totalCompatibility);
-
-	alert("Your match score is: " + totalCompatibility + "%");
-
+    alert("Your match score is: " + totalCompatibility + "%");
 }
 
 </script>

@@ -5,6 +5,32 @@
     <title>Matchmaker</title>
   </head>
   <body>
+
     <h1>Matchmaker</h1>
+    <label>Dogs are better than cats</label><br />
+    <select id="q1">
+      <option value="5">Strongly Agree</option>
+      <option value="4">Agree</option>
+      <option value="3">Neither agree nor disagree</option>
+      <option value="2">Disagree</option>
+      <option value="1">Strongly Disagree</option>
+    </select>
+<button onclick="seematch()">Calculate Compatibility</button>
+<p id="compatibility"> </p>
+
+
+<script>
+  console.log("Starting Matchmaker...");
+
+function seematch() {
+  console.log("seematch()");
+  const desiredResponse1 = 5; //strongly agree that dogs are better than cats
+  let question1Response = document.getElementById("q1").value;
+  console.log("Question 1 response:", question1Response);
+}
+</script>
+
+
+
   </body>
 </html>

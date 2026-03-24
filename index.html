@@ -1,36 +1,124 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <title>Matchmaker</title>
-  </head>
-  <body>
+</head>
 
+<body>
     <h1>Matchmaker</h1>
-    <label>Dogs are better than cats</label><br />
-    <select id="q1">
-      <option value="5">Strongly Agree</option>
-      <option value="4">Agree</option>
-      <option value="3">Neither agree nor disagree</option>
-      <option value="2">Disagree</option>
-      <option value="1">Strongly Disagree</option>
-    </select>
-<button onclick="seematch()">Calculate Compatibility</button>
-<p id="compatibility"> </p>
+    <p>Instruction</p>
+
+
+<label>Staying in for a cozy movie night beats going out to a party</label><br />
+	<select id="q1">
+		<option value="5">Strongly Agree</option>
+		<option value="4">Agree</option>
+		<option value="3">Neither agree nor disagree</option>
+		<option value="2">Disagree</option>
+		<option value="1">Strongly Disagree</option>
+	</select>
+<br /><br />
+
+<label>Trying exotic foods from around the world sounds exciting</label><br />
+	<select id="q2">
+		<option value="5">Strongly Agree</option>
+		<option value="4">Agree</option>
+		<option value="3">Neither agree nor disagree</option>
+		<option value="2">Disagree</option>
+		<option value="1">Strongly Disagree</option>
+	</select>
+<br /><br />
+
+<label>Tacos are the best food in the world</label><br />
+	<select id="q3">
+		<option value="5">Strongly Agree</option>
+		<option value="4">Agree</option>
+		<option value="3">Neither agree nor disagree</option>
+		<option value="2">Disagree</option>
+		<option value="1">Strongly Disagree</option>
+	</select>
+<br /><br />
+
+<label>Exploring nature on weekend hikes is the perfect way to unwind</label><br />
+	<select id="q4">
+		<option value="5">Strongly Agree</option>
+		<option value="4">Agree</option>
+		<option value="3">Neither agree nor disagree</option>
+		<option value="2">Disagree</option>
+		<option value="1">Strongly Disagree</option>
+	</select>
+<br /><br />
+
+<label>Physical fitness is important for a healthy lifestyle</label><br />
+	<select id="q5">
+		<option value="5">Strongly Agree</option>
+		<option value="4">Agree</option>
+		<option value="3">Neither agree nor disagree</option>
+		<option value="2">Disagree</option>
+		<option value="1">Strongly Disagree</option>
+	</select>
+<br /><br />
+
+
+
+<button onclick="calculateMatch()">Calculate Match</button>
+
+
+
+
+
 
 
 <script>
-  console.log("Starting Matchmaker...");
+console.log("starting Matchmake Lite");
 
-function seematch() {
-  console.log("seematch()");
-  const desiredResponse1 = 5; //strongly agree that dogs are better than cats
-  let question1Response = document.getElementById("q1").value;
-  console.log("Question 1 response:", question1Response);
+function calculateMatch() {
+    console.log("Calculating match...");
+
+  const DESIRED_RESPONSE = [
+    5, /* strongly agree - cozy movie night */
+    4, /* agree - exotic foods */
+    5, /* strongly agree - tacos */
+    4, /* agree - nature hikes */
+    5, /* strongly agree - physical fitness */
+  ];  
+
+	// Get the current values of the dropdown controls.
+	let question1Response = document.getElementById("q1").selectedOptions[0].value;
+	let question2Response = document.getElementById("q2").selectedOptions[0].value;
+	let question3Response = document.getElementById("q3").selectedOptions[0].value;
+	let question4Response = document.getElementById("q4").selectedOptions[0].value;
+	let question5Response = document.getElementById("q5").selectedOptions[0].value;
+
+    const MAX_SCORE = 25;
+
+  // Calculate compatibility scores using Math.abs() like the professor's example
+  let question1Compatibility = 5 - Math.abs(question1Response - DESIRED_RESPONSE[0]);
+  let question2Compatibility = 5 - Math.abs(question2Response - DESIRED_RESPONSE[1]);
+  let question3Compatibility = 5 - Math.abs(question3Response - DESIRED_RESPONSE[2]);
+  let question4Compatibility = 5 - Math.abs(question4Response - DESIRED_RESPONSE[3]);
+  let question5Compatibility = 5 - Math.abs(question5Response - DESIRED_RESPONSE[4]);
+
+  // Add them all up
+  let totalCompatibility = question1Compatibility + question2Compatibility + question3Compatibility + question4Compatibility + question5Compatibility;
+
+  // Convert to percentage
+  totalCompatibility *= 100 / MAX_SCORE;
+  totalCompatibility = Math.round(totalCompatibility);
+
+	alert("Your match score is: " + totalCompatibility + "%");
+
 }
+
 </script>
 
 
 
-  </body>
+
+
+
+
+</body>
 </html>
+

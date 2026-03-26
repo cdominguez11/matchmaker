@@ -1,117 +1,211 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Matchmaker</title>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<title>Matchmaker</title>
+	<style>
+		:root{--bg:#f5f7fb;--card:#ffffff;--accent:#2563eb;--muted:#6b7280}
+		html,body{height:100%}
+		body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;display:flex;align-items:center;justify-content:center;background:var(--bg);color:#111;padding:20px}
+		.container{width:100%;max-width:760px;background:var(--card);padding:24px;border-radius:12px;box-shadow:0 8px 30px rgba(16,24,40,0.08)}
+		h1{margin:0 0 8px;color:#0f172a;text-align:center}
+		.lead{margin:0 0 18px;color:var(--muted);text-align:center}
+		.instructions{background:#f0f6ff;border:1px solid rgba(37,99,235,0.06);padding:12px;border-radius:8px;margin-bottom:18px;font-size:0.95rem}
+		.questions{display:grid;gap:12px}
+		.question{display:flex;flex-direction:column}
+		label{font-weight:600;margin-bottom:6px}
+		select{max-width:360px;padding:8px 10px;border-radius:8px;border:1px solid #e6e9ef;background:white}
+		.actions{display:flex;justify-content:center;margin-top:16px}
+		button{background:var(--accent);color:white;padding:10px 16px;border-radius:10px;border:none;cursor:pointer;font-weight:700}
+		.note{margin-top:10px;text-align:center;color:var(--muted);font-size:0.9rem}
+		/* Results */
+		#results{margin-top:18px}
+		.results-panel{background:linear-gradient(180deg,#ffffff,#fbfdff);border:1px solid #eef2ff;padding:14px;border-radius:10px}
+		.results-panel h3{margin:0 0 12px;font-size:1.05rem;color:#0b1220}
+		.result-row{display:grid;grid-template-columns:1fr 64px;gap:8px;align-items:center;padding:8px 0;border-top:1px dashed #eef2ff}
+		.result-row:first-of-type{border-top:0}
+		.result-label{font-size:0.95rem;color:#111;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+		.result-score{font-weight:700;color:#0f172a;text-align:right}
+		.result-bar{grid-column:1 / -1;height:10px;background:#eef2ff;border-radius:999px;overflow:hidden;margin-top:6px}
+		.result-bar span{display:block;height:100%;border-radius:999px;transition:width 600ms cubic-bezier(.2,.9,.2,1),background 300ms}
+		.overall{margin-top:12px;font-size:1rem;color:#0b1220}
+		.remark{margin-top:8px;color:#374151;font-weight:600}
+		.error{background:#fff1f2;border:1px solid #fecaca;padding:10px;border-radius:8px;color:#991b1b}
+		select.invalid{border-color:#ef4444;outline:2px solid #fecaca}
+		@media (max-width:520px){.container{padding:18px}}
+	</style>
 </head>
 
 <body>
-    <h1>Matchmaker</h1>
-    <p>Instruction</p>
+	<div class="container">
+		<h1>Matchmaker</h1>
+		<p class="lead">Find how closely your answers match the desired profile.</p>
 
+		<div class="instructions">
+			<strong>How it works:</strong> Answer each question using the dropdown (Strongly Agree → Strongly Disagree). When you click "Calculate Match" the app compares your answers to a preset profile and shows a match score (%) — higher is better.
+		</div>
 
-<label>Staying in for a cozy movie night beats going out to a party</label><br />
-	<select id="q1">
-		<option value="5">Strongly Agree</option>
-		<option value="4">Agree</option>
-		<option value="3">Neither agree nor disagree</option>
-		<option value="2">Disagree</option>
-		<option value="1">Strongly Disagree</option>
-	</select>
-<br /><br />
+		<div class="questions">
+			<div class="question">
+				<label for="q1">Staying in for a cozy movie night beats going out to a party</label>
+				<select id="q1" aria-label="Question 1">
+					<option value="">— Select an answer —</option>
+					<option value="5">Strongly Agree</option>
+					<option value="4">Agree</option>
+					<option value="3">Neither agree nor disagree</option>
+					<option value="2">Disagree</option>
+					<option value="1">Strongly Disagree</option>
+				</select>
+			</div>
 
-<label>Trying exotic foods from around the world sounds exciting</label><br />
-	<select id="q2">
-		<option value="5">Strongly Agree</option>
-		<option value="4">Agree</option>
-		<option value="3">Neither agree nor disagree</option>
-		<option value="2">Disagree</option>
-		<option value="1">Strongly Disagree</option>
-	</select>
-<br /><br />
+			<div class="question">
+				<label for="q2">Trying exotic foods from around the world sounds exciting</label>
+				<select id="q2" aria-label="Question 2">
+					<option value="">— Select an answer —</option>
+					<option value="5">Strongly Agree</option>
+					<option value="4">Agree</option>
+					<option value="3">Neither agree nor disagree</option>
+					<option value="2">Disagree</option>
+					<option value="1">Strongly Disagree</option>
+				</select>
+			</div>
 
-<label>Tacos are the best food in the world</label><br />
-	<select id="q3">
-		<option value="5">Strongly Agree</option>
-		<option value="4">Agree</option>
-		<option value="3">Neither agree nor disagree</option>
-		<option value="2">Disagree</option>
-		<option value="1">Strongly Disagree</option>
-	</select>
-<br /><br />
+			<div class="question">
+				<label for="q3">Tacos are the best food in the world</label>
+				<select id="q3" aria-label="Question 3">
+					<option value="">— Select an answer —</option>
+					<option value="5">Strongly Agree</option>
+					<option value="4">Agree</option>
+					<option value="3">Neither agree nor disagree</option>
+					<option value="2">Disagree</option>
+					<option value="1">Strongly Disagree</option>
+				</select>
+			</div>
 
-<label>Exploring nature on weekend hikes is the perfect way to unwind</label><br />
-	<select id="q4">
-		<option value="5">Strongly Agree</option>
-		<option value="4">Agree</option>
-		<option value="3">Neither agree nor disagree</option>
-		<option value="2">Disagree</option>
-		<option value="1">Strongly Disagree</option>
-	</select>
-<br /><br />
+			<div class="question">
+				<label for="q4">Exploring nature on weekend hikes is the perfect way to unwind</label>
+				<select id="q4" aria-label="Question 4">
+					<option value="">— Select an answer —</option>
+					<option value="5">Strongly Agree</option>
+					<option value="4">Agree</option>
+					<option value="3">Neither agree nor disagree</option>
+					<option value="2">Disagree</option>
+					<option value="1">Strongly Disagree</option>
+				</select>
+			</div>
 
-<label>Physical fitness is important for a healthy lifestyle</label><br />
-	<select id="q5">
-		<option value="5">Strongly Agree</option>
-		<option value="4">Agree</option>
-		<option value="3">Neither agree nor disagree</option>
-		<option value="2">Disagree</option>
-		<option value="1">Strongly Disagree</option>
-	</select>
-<br /><br />
+			<div class="question">
+				<label for="q5">Physical fitness is important for a healthy lifestyle</label>
+				<select id="q5" aria-label="Question 5">
+					<option value="">— Select an answer —</option>
+					<option value="5">Strongly Agree</option>
+					<option value="4">Agree</option>
+					<option value="3">Neither agree nor disagree</option>
+					<option value="2">Disagree</option>
+					<option value="1">Strongly Disagree</option>
+				</select>
+			</div>
+		</div>
 
+		<div class="actions">
+			<button id="calc">Calculate Match</button>
+		</div>
 
+		<div id="results" aria-live="polite"></div>
+	</div>
 
-<button onclick="calculateMatch()">Calculate Match</button>
+	<script>
+	// --- Constants ---
+	const DESIRED_RESPONSE = [5, 4, 5, 4, 5];
+	const COLOR_GREEN  = '#10b981';
+	const COLOR_AMBER  = '#f59e0b';
+	const COLOR_RED    = '#ef4444';
+	const THRESHOLD_GOOD      = 75;
+	const THRESHOLD_MODERATE  = 50;
 
+	console.log("starting Matchmake Lite");
 
+	// Returns true if all questions are answered; otherwise marks invalid selects
+	// and shows a single error message listing which questions need answers.
+	function validate(selects) {
+		const invalid = [];
+		selects.forEach((el, i) => {
+			el.classList.remove('invalid');
+			if (el.value === '') invalid.push({ el, num: i + 1 });
+		});
 
+		if (invalid.length === 0) return true;
 
+		invalid.forEach(({ el }) => el.classList.add('invalid'));
 
+		const nums = invalid.map(({ num }) => `Q${num}`).join(', ');
+		const msg = `Please answer the following question(s) before calculating: ${nums}.`;
+		const container = document.getElementById('results');
+		const div = document.createElement('div');
+		div.className = 'error';
+		div.textContent = msg;
+		container.innerHTML = '';
+		container.appendChild(div);
+		invalid[0].el.focus();
+		return false;
+	}
 
+	function getColor(score) {
+		if (score >= THRESHOLD_GOOD)     return COLOR_GREEN;
+		if (score >= THRESHOLD_MODERATE) return COLOR_AMBER;
+		return COLOR_RED;
+	}
 
-<script>
-console.log("starting Matchmake Lite");
+	function renderResults(perQuestion, overall, remark) {
+		const container = document.getElementById('results');
+		const rows = perQuestion.map((p, i) => {
+			return `
+				<div class="result-row">
+					<div class="result-label">Q${i+1}: ${p.text}</div>
+					<div class="result-score">${p.score}%</div>
+					<div class="result-bar"><span style="width:${p.score}%;background:${getColor(p.score)}"></span></div>
+				</div>`;
+		}).join('');
 
-function calculateMatch() {
-    console.log("Calculating match...");
+		container.innerHTML = `
+			<div class="results-panel">
+				<h3>Compatibility Summary</h3>
+				${rows}
+				<div class="overall">Overall compatibility: <strong>${overall}%</strong></div>
+				<div class="remark">${remark}</div>
+			</div>`;
+	}
 
-    const DESIRED_RESPONSE = [
-        5, /* strongly agree - cozy movie night */
-        4, /* agree - exotic foods */
-        5, /* strongly agree - tacos */
-        4, /* agree - nature hikes */
-        5, /* strongly agree - physical fitness */
-    ];
+	function calculateMatch() {
+		const selects = Array.from(document.querySelectorAll('.question select'));
 
-    // Get the current values of the dropdown controls.
-    let question1Response = document.getElementById("q1").selectedOptions[0].value;
-    let question2Response = document.getElementById("q2").selectedOptions[0].value;
-    let question3Response = document.getElementById("q3").selectedOptions[0].value;
-    let question4Response = document.getElementById("q4").selectedOptions[0].value;
-    let question5Response = document.getElementById("q5").selectedOptions[0].value;
+		if (!validate(selects)) return;
 
-    // Calculate the absolute difference for each question
-    let question1Compatibility = Math.abs(question1Response - DESIRED_RESPONSE[0]);
-    let question2Compatibility = Math.abs(question2Response - DESIRED_RESPONSE[1]);
-    let question3Compatibility = Math.abs(question3Response - DESIRED_RESPONSE[2]);
-    let question4Compatibility = Math.abs(question4Response - DESIRED_RESPONSE[3]);
-    let question5Compatibility = Math.abs(question5Response - DESIRED_RESPONSE[4]);
+		const answers = selects.map(el => ({
+			val: parseInt(el.value, 10),
+			text: document.querySelector(`label[for="${el.id}"]`).textContent
+		}));
 
-    // Add them up and subtract from 100
-    let totalCompatibility = 100 - (question1Compatibility + question2Compatibility + question3Compatibility + question4Compatibility + question5Compatibility);
+		// Compute per-question percentage compatibility (0-100)
+		const perQuestion = answers.map((ans, i) => {
+			const diff = Math.abs(ans.val - DESIRED_RESPONSE[i]);
+			const score = Math.round((1 - (diff / 4)) * 100); // diff max is 4
+			return { text: ans.text, score };
+		});
 
-    alert("Your match score is: " + totalCompatibility + "%");
-}
+		const overall = Math.round(perQuestion.reduce((s, p) => s + p.score, 0) / perQuestion.length);
 
-</script>
+		let remark = '';
+		if (overall >= 85)              remark = 'Excellent match — you two would likely get along famously!';
+		else if (overall >= 70)         remark = 'Good match — plenty in common to build on.';
+		else if (overall >= THRESHOLD_MODERATE) remark = 'Some common ground — could be promising with compromise.';
+		else                            remark = 'Low match — your preferences differ significantly.';
 
+		renderResults(perQuestion, overall, remark);
+	}
 
-
-
-
-
-
+	document.getElementById('calc').addEventListener('click', calculateMatch);
+	</script>
 </body>
 </html>
-
